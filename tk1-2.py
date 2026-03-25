@@ -35,22 +35,18 @@ class cancha:
         ]
         for i in self.posiciones:
             index = self.posiciones.index(i)
-            self.jugadores.append(ttk.Button(self.croot, command=lambda: self.select(index), image=self.jugadores_fotos[index]))
-            self.jugadores[index].place(x=i[0], y=i[1])
+            self.jugadores.append(ttk.Button(self.croot, command=lambda idx=index: self.select(idx), image=self.jugadores_fotos[index]))
+            self.jugadores[index].place(x=i[0], y=i[1], anchor=CENTER)
     def select(self, index):
         if not self.selected:
             self.selected = self.jugadores[index]
         else:
             posx1 = self.posiciones[index][0]
-            print(posx1)
             posy1 = self.posiciones[index][1]
-            print(posy1)
             posx2 = self.posiciones[self.jugadores.index(self.selected)][0]
-            print(posx2)
             posy2 = self.posiciones[self.jugadores.index(self.selected)][1]
-            print(posy2)
-            self.jugadores[self.jugadores.index(self.selected)].place(posx1, posy1)
-            self.jugadores[index].place(posx2, posy2)
+            self.jugadores[self.jugadores.index(self.selected)].place(x=posx1, y=posy1, anchor=CENTER)
+            self.jugadores[index].place(x=posx2, y=posy2, anchor=CENTER)
             self.jugadores[index], self.jugadores[self.jugadores.index(self.selected)] = self.jugadores[self.jugadores.index(self.selected)], self.jugadores[index]
             self.selected = ""
 
