@@ -33,21 +33,28 @@ class cancha:
             (100, 280), (300, 280), (500, 280), 
             (300, 100)  
         ]
-        for i in self.posiciones:
-            index = self.posiciones.index(i)
-            self.jugadores.append(ttk.Button(self.croot, command=lambda idx=index: self.select(idx), image=self.jugadores_fotos[index]))
-            self.jugadores[index].place(x=i[0], y=i[1], anchor=CENTER)
-    def select(self, index):
+        for i, pos in enumerate(self.posiciones):
+            btn = ttk.Button(self.croot, image=self.jugadores_fotos[i])
+            btn.pos_index = i 
+            btn.config(command=lambda b=btn: self.select(b))
+            btn.place(x=pos[0], y=pos[1], anchor=CENTER)
+            self.jugadores.append(btn)
+
+    def select(self, clicked_btn):
         if not self.selected:
-            self.selected = self.jugadores[index]
+            self.selected = clicked_btn
         else:
-            posx1 = self.posiciones[index][0]
-            posy1 = self.posiciones[index][1]
-            posx2 = self.posiciones[self.jugadores.index(self.selected)][0]
-            posy2 = self.posiciones[self.jugadores.index(self.selected)][1]
-            self.jugadores[self.jugadores.index(self.selected)].place(x=posx1, y=posy1, anchor=CENTER)
-            self.jugadores[index].place(x=posx2, y=posy2, anchor=CENTER)
-            self.jugadores[index], self.jugadores[self.jugadores.index(self.selected)] = self.jugadores[self.jugadores.index(self.selected)], self.jugadores[index]
+            idx1 = clicked_btn.pos_index
+            idx2 = self.selected.pos_index
+
+            pos1 = self.posiciones[idx1]
+            pos2 = self.posiciones[idx2]
+
+            self.selected.place(x=pos1[0], y=pos1[1], anchor=CENTER)
+            clicked_btn.place(x=pos2[0], y=pos2[1], anchor=CENTER)
+
+            self.selected.pos_index, clicked_btn.pos_index = idx1, idx2
+
             self.selected = ""
 
 app = cancha(root, "imagencancha.jpg", "cambeses.jpg", "rojas.jpg", "rojo.jpg", "di-cesare.jpg", "cannavo.jpg", "sosa.jpg", "zuculini.jpg", "conechny.jpg", "fernandez.jpg", "martirena.jpg", "solari.jpg")
