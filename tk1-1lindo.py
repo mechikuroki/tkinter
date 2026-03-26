@@ -17,6 +17,7 @@ class Calculator:
             '1', '2', '3', '-',
             'C', '0', '=', '+',
             '^', '^(1/', '(', ')',
+            '.'
         ]
 
         row_val = 1
@@ -30,7 +31,7 @@ class Calculator:
                 col_val = 0
                 row_val += 1
         for i in range(4): root.grid_columnconfigure(i, weight=1)
-        for i in range(6): root.grid_rowconfigure(i, weight=1)
+        for i in range(7): root.grid_rowconfigure(i, weight=1)
 
     def click_event(self, key):
         if key == "=":

@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Titanium Carabiner",
+    "key": "ACC-7721-XB",
+    "price": 24.99,
+    "stock": 42,
+    "category": "Outdoor Gear"
+  },
+  {
+    "name": "Mechanical Keyboard (Blue Switch)",
+    "key": "PER-9904-MK",
+    "price": 89.50,
+    "stock": 15,
+    "category": "Electronics"
+  },
+  {
+    "name": "Organic Roasted Coffee Beans",
+    "key": "BEV-1123-CF",
+    "price": 18.00,
+    "stock": 120,
+    "category": "Groceries"
+  },
+  {
+    "name": "Ergonomic Mesh Chair",
+    "key": "FUR-3345-EC",
+    "price": 210.00,
+    "stock": 8,
+    "category": "Furniture"
+  },
+  {
+    "name": "Stainless Steel Water Bottle",
+    "key": "DWI-5567-SS",
+    "price": 32.75,
+    "stock": 64,
+    "category": "Kitchenware"
+  },
+  {
+    "name": "Noise-Cancelling Headphones",
+    "key": "AUD-8812-NH",
+    "price": 299.99,
+    "stock": 23,
+    "category": "Electronics"
+  },
+  {
+    "name": "Recycled Canvas Backpack",
+    "key": "LUG-4409-CB",
+    "price": 55.00,
+    "stock": 37,
+    "category": "Travel"
+  },
+  {
+    "name": "Smart LED Light Bulb",
+    "key": "HME-2210-LB",
+    "price": 14.25,
+    "stock": 210,
+    "category": "Home Improvement"
+  },
+  {
+    "name": "Synthetic Yoga Mat",
+    "key": "FIT-6631-YM",
+    "price": 45.00,
+    "stock": 56,
+    "category": "Fitness"
+  },
+  {
+    "name": "Ceramic Succulent Pot",
+    "key": "GDN-0018-CP",
+    "price": 12.95,
+    "stock": 89,
+    "category": "Garden"
+  }
+]
