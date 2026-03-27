@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk, messagebox
-import ijson
+import ijson, json
 from pathlib import Path
 
 class Inventory:
@@ -46,13 +46,13 @@ class Inventory:
             for i in tree.get_children():
                 tree.delete(i)
 
-            with open(Path("inventory.json").resolve(), "rb") as file:
-                parser = ijson.items(file, 'item')
-                for data in parser:
+            with open(Path("inventory.jsonl").resolve(), "r") as file:
+                for i in file:
+                    data = json.loads(i.strip())
                     self.json_to_tree(tree, data, "")
 
         except Exception as e:
-            messagebox.showerror("Error", f"Failed to load JSON file.\n{e}")
+            messagebox.showerror("Error", f"Falló en cargar el archivo JSON\n{e}")
 
     def json_to_tree(self, tree, data, parent_node):
         if isinstance(data, dict):  
@@ -68,9 +68,36 @@ class Inventory:
         else:
             tree.insert(parent_node, END, text=str(data))
 
+    def check_values(self):
+        try:
+            if str(self.name.get()).isprintable() == False:
+                raise ValueError("Nombre debe ser imprimible")
+            elif str(self.key.get()).isidentifier() == False:
+                raise ValueError("Llave debe ser formateada como identificador")
+            elif str(self.price.get()).isdigit() == False:
+                raise ValueError("Precio debe ser numérico")
+            elif str(self.stock.get()).isdigit() == False:
+                raise ValueError("Stock debe ser un entero numérico")
+            elif str(self.category.get()).isprintable() == False:
+                raise ValueError("Categoría debe ser imprimible")
+        except Exception as e:
+            messagebox.showerror("Error", e)
+            return False
+        else:
+            return True
 
     def save(self):
-        pass
+        if self.check_values() == False:
+            return
+        else:
+            new_entry = {"name": str(self.name.get()), "key": str(self.key.get()), "price": float(self.price.get()), "stock": int(self.stock.get()), "category": str(self.category.get())}
+        try:
+            with open('data.jsonl', 'a') as f:
+                f.write(json.dumps(new_entry) + '\n')
+        except Exception as e:
+            messagebox.showerror("Error", e)
+        load_json_file(self.tree)
+
     def change(self):
         pass
     def erase(self):
