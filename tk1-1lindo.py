@@ -15,21 +15,21 @@ class Calculator:
             '7', '8', '9', '/',
             '4', '5', '6', '*',
             '1', '2', '3', '-',
-            'C', '0', '=', '+',
+            'C', '0', '.', '+',
             '^', '^(1/', '(', ')',
-            '.'
+           
         ]
 
-        row_val = 1
+        row_val = 2
         col_val = 0
         for button in buttons:
             action = lambda x=button: self.click_event(x)
-            Button(root, text=button, width=5, height=2, bg="lightblue", font=("Helvetica", 14),
-                      command=action).grid(row=row_val, column=col_val, sticky="nsew", padx=2, pady=2)
+            Button(root, text=button, width=5, height=2, bg="lightblue", font=("Helvetica", 14), command=action).grid(row=row_val, column=col_val, sticky="nsew", padx=2, pady=2)
             col_val += 1
             if col_val > 3:
                 col_val = 0
                 row_val += 1
+        Button(root, text="=", width=5, height=2, bg="lightblue", font=("Helvetica", 14), command=lambda: self.click_event("=")).grid(row=6, column=0, columnspan=4, sticky="nsew", padx=2, pady=2)
         for i in range(4): root.grid_columnconfigure(i, weight=1)
         for i in range(7): root.grid_rowconfigure(i, weight=1)
 
