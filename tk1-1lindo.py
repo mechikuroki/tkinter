@@ -16,7 +16,7 @@ class Calculator:
             '4', '5', '6', '*',
             '1', '2', '3', '-',
             'C', '0', '.', '+',
-            '^', '^(1/', '(', ')',
+            '^', '^(1/', '(', ')'
            
         ]
 
@@ -29,9 +29,9 @@ class Calculator:
             if col_val > 3:
                 col_val = 0
                 row_val += 1
-        Button(root, text="=", width=5, height=2, bg="lightblue", font=("Helvetica", 14), command=lambda: self.click_event("=")).grid(row=6, column=0, columnspan=4, sticky="nsew", padx=2, pady=2)
+        Button(root, text="=", width=5, height=2, bg="lightblue", font=("Helvetica", 14), command=lambda: self.click_event("=")).grid(row=7, column=0, columnspan=4, sticky="nsew", padx=2, pady=2)
         for i in range(4): root.grid_columnconfigure(i, weight=1)
-        for i in range(7): root.grid_rowconfigure(i, weight=1)
+        for i in range(8): root.grid_rowconfigure(i, weight=1)
 
     def click_event(self, key):
         if key == "=":
