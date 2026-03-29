@@ -36,8 +36,8 @@ class Inventory:
         
         self.categorialabel = Label(self.entrysection, text="Categoría")
         self.categorialabel.grid(row=count-1, column=0, columnspan=3, sticky=NSEW)
-        categorylist = ("Ropa", "Marroquinería", "Muebles", "Sacrificios")
-        self.categoria = Spinbox(self.entrysection, bg="white", values=categorylist, state="readonly")
+        self.categorialist = ("Ropa", "Marroquinería", "Muebles", "Sacrificios")
+        self.categoria = Spinbox(self.entrysection, bg="white", values=self.categorialist, state="readonly")
         self.categoria.grid(row=count, column=0, columnspan=3, sticky=NSEW)
 
         self.savebutton = Button(self.entrysection, text="Guardar", command=self.save)
@@ -53,26 +53,26 @@ class Inventory:
         self.scrollbar = ttk.Scrollbar(self.treesection, orient=VERTICAL, command=self.tree.yview)
         self.scrollbar.grid(row=0, column=1, sticky=NSEW)
         self.tree.configure(yscrollcommand=self.scrollbar.set)
-
-
+    
     def load_json_file(self, tree):
         try:
             for i in tree.get_children():
                 tree.delete(i)
 
+            for i in self.categorialist:
+                self.tree.insert("", END, iid=hash(i), text=i, open=True)
+            
             with open(Path("inventory.jsonl").resolve(), "r") as file:
                 for i in file:
                     data = json.loads(i.strip())
-                    self.json_to_tree(tree, data, "")
+                    self.json_to_tree(tree, data, hash(data["categoría"]))
 
         except Exception as e:
             messagebox.showerror("Error", f"Falló en cargar el archivo JSON\n{e}")
 
     def json_to_tree(self, tree, data, parent_node, datatype=None):
-        if isinstance(data, dict):  
-            parent_node = tree.insert(parent_node, END, text=data["categoría"].title(), open=True)
+        if isinstance(data, dict):
             new_node = tree.insert(parent_node, END, iid=data["llave"], text=data["nombre"], open=True)
-
             data.pop("categoría")
             data.pop("nombre")
 
@@ -81,18 +81,20 @@ class Inventory:
         else:
             tree.insert(parent_node, END, text=f"{datatype.title()}: {data}")
 
-    def check_values(self):
+    def check_values(self, everyentry=False):
         try:
-            if str(self.nombre.get()).isprintable() == False:
-                raise ValueError("Nombre debe ser imprimible")
-            elif str(self.llave.get()).isidentifier() == False:
-                raise ValueError("Llave debe ser formateada como identificador")
-            elif str(self.precio.get()).isdigit() == False:
-                raise ValueError("Precio debe ser numérico")
-            elif str(self.stock.get()).isdigit() == False:
-                raise ValueError("Stock debe ser un entero numérico")
-            elif str(self.categoria.get()).isprintable() == False:
-                raise ValueError("Categoría debe ser imprimible")
+            if everyentry:
+                if str(self.nombre.get()).isprintable() == False:
+                    raise ValueError("Nombre debe ser imprimible")
+                elif str(self.precio.get()).isdigit() == False:
+                    raise ValueError("Precio debe ser numérico")
+                elif str(self.stock.get()).isdigit() == False:
+                    raise ValueError("Stock debe ser un entero numérico")
+                elif str(self.categoria.get()).isprintable() == False:
+                    raise ValueError("Categoría debe ser imprimible")
+            else:
+                if str(self.llave.get()).isidentifier() == False:
+                    raise ValueError("Llave debe ser formateada como identificador")
         except Exception as e:
             messagebox.showerror("Error", e)
             return False
@@ -100,7 +102,7 @@ class Inventory:
             return True
 
     def save(self):
-        if self.check_values() == False:
+        if self.check_values(everyentry=True) == False:
             return
         elif self.tree.exists(self.llave.get()):
             messagebox.showerror("Error", "Producto ya existe")
@@ -115,7 +117,7 @@ class Inventory:
             self.load_json_file(self.tree)
 
     def change(self):
-        if self.check_values() == False:
+        if self.check_values(everyentry=True) == False:
             return
         elif self.tree.exists(self.llave.get()) == False:
             messagebox.showerror("Error", "Llave inexistente")
