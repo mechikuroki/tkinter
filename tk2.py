@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk, messagebox
-import ijson, json, os 
+import json, os 
 from pathlib import Path
 
 #á  é  í  ó  ú
@@ -82,7 +82,9 @@ class Inventory:
             tree.insert(parent_node, END, text=f"{datatype.title()}: {data}")
 
     def check_values(self, everyentry=False):
-        try:
+        try: 
+            if str(self.llave.get()).isidentifier() == False:
+                raise ValueError("Llave debe ser formateada como identificador")
             if everyentry:
                 if str(self.nombre.get()).isprintable() == False:
                     raise ValueError("Nombre debe ser imprimible")
@@ -92,9 +94,6 @@ class Inventory:
                     raise ValueError("Stock debe ser un entero numérico")
                 elif str(self.categoria.get()).isprintable() == False:
                     raise ValueError("Categoría debe ser imprimible")
-            else:
-                if str(self.llave.get()).isidentifier() == False:
-                    raise ValueError("Llave debe ser formateada como identificador")
         except Exception as e:
             messagebox.showerror("Error", e)
             return False
