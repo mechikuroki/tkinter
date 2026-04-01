@@ -3,15 +3,18 @@ from tkinter import messagebox
 import re
 class Calculator:
     def __init__(self, root):
+        #seteo root
         self.root = root
         self.root.title("Calculadora (ahora linda)")
         self.root.geometry("700x900")
         
         self.equation = ""
         
+        #el "display" donde va el input
         self.display = Entry(root, font=("Helvetica", 24), borderwidth=5, relief="flat", justify='right')
         self.display.grid(row=0, column=0, columnspan=4, padx=10, pady=20, sticky="nsew")
 
+        #para crear los botones normales
         buttons = {
                 'seven': '7', 'eight' : '8', 'nine' : '9', 'division' : '/',
                 'four' : '4', 'five' : '5', 'six' : '6', 'multiplication' : '*',
@@ -29,10 +32,11 @@ class Calculator:
             if col_val > 3:
                 col_val = 0
                 row_val += 1
+        #boton grande del igual
         self.equalbutton = Button(root, text="=", width=5, height=2, bg="lightblue", font=("Helvetica", 14), command=lambda: self.click_event("=")).grid(row=7, column=0, columnspan=4, sticky="nsew", padx=2, pady=2)
         for i in range(4): root.grid_columnconfigure(i, weight=1)
         for i in range(8): root.grid_rowconfigure(i, weight=1)
-
+    #funcion de cliquear los botones
     def click_event(self, key):
         if key == "=":
             self.calculate()
@@ -48,15 +52,18 @@ class Calculator:
             self.equation += str(key)
             self.update_display(key)
 
+    #funcion para que el "display" se cambie cuando se ingresa un valor
     def update_display(self, val):
         current = self.display.get()
         self.display.delete(0, END)
         self.display.insert(0, current + val)
 
+    #funcion que limpia el display
     def clear_screen(self):
         self.equation = ""
         self.display.delete(0, END)
 
+    #funcion para calcular
     def calculate(self):
         try:
             self.equation = re.sub(r'\b0+(?=\d)', '', self.equation)
@@ -68,7 +75,7 @@ class Calculator:
             messagebox.showerror("Error", "Invalid Input")
             self.clear_screen()
 
-
-root = Tk()
-my_calc = Calculator(root)
-root.mainloop()
+if __name__ == "__main__":
+    root = Tk()
+    my_calc = Calculator(root)
+    root.mainloop()
