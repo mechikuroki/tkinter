@@ -4,6 +4,7 @@ import re
 class Calculator:
     def __init__(self, root):
         #seteo root
+        super().__init__()
         self.root = root
         self.root.title("Calculadora (ahora linda)")
         self.root.geometry("700x900")

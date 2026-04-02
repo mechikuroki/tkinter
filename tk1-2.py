@@ -27,7 +27,7 @@ class cancha:
         #configurar las fotos como, bueno, fotos de tkinter 
         for i in plantel:
             j = Image.open(Path(os.path.join("jugadores", i)).resolve())
-            j = j.resize((100, 100), Image.Resampling.LANCZOS)
+            j = j.resize((100, 106), Image.Resampling.LANCZOS)
             j = ImageTk.PhotoImage(j)
             self.jugadores_fotos.append(j)
 
