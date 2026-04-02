@@ -5,7 +5,7 @@ from pathlib import Path
 
 #á  é  í  ó  ú
 #aclaracion: tengo el teclado en ingles y no tengo ganas de ponerlo en us international porque el layout se mezcla y encima muchos caracteres se vuelven medio
-#cripticos para escribir; las letras en el archivo con tilde las copie del comentario de arriba pero me parece que para los comentarios no tiene mucha vuelta
+#criticos para escribir; las letras en el archivo con tilde las copie del comentario de arriba pero me parece que para los comentarios no tiene mucha vuelta
 
 #esto es lo que hice antes de darme cuenta que todo se tenia que cargar en memoria
 class Inventory:
@@ -137,7 +137,7 @@ class Inventory:
             messagebox.showerror("Error", "Producto ya existe")
             return
         else:
-            new_entry = {"nombre": self.nombre.get(), "llave": self.llave.get(), "precio": float(self.precio.get()),  "categoría": self.categoria.get(), "stock": int(self.stockvar.get())}
+            new_entry = {"nombre": self.nombre.get(), "llave": self.llave.get(), "precio": float(self.precio.get()),  "categoria": self.categoria.get(), "stock": int(self.stockvar.get())}
             try:
                 with open('inventory.jsonl', 'a') as f:
                     f.write(json.dumps(new_entry) + '\n')
